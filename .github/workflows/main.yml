@@ -16,11 +16,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+      - name: install lftp
+        run: sudo apt-get install lftp -y
 
       - name: Deploy to Hosting
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@3.0.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir:  ${{ secrets.SERVER_PATH }}     
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-dir:  ${{ secrets.SERVER_PATH }}     
