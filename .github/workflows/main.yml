@@ -5,27 +5,22 @@ on:
     branches: [main]
 
 env:
-  SERVER_HOST: 54.91.233.2
-  SERVER_USER: ubuntu
-  SERVER_PATH: /home/ubuntu/github-test
+  FTP_SERVER: 54.91.233.2
+  FTP_USERNAME: ubuntu
+  SERVER_PATH: /home/ubuntu/project
 
 jobs:
-
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      # Install ssh key
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2.3.1
+      - name: Deploy to Hosting
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          key: "${{ secrets.KEY_FOR_FTP }}"
-          known_hosts: "just-a-placeholder-so-we-dont-get-errors"
-          
-      - name: Generate auth hosts
-        run: ssh-keyscan -H ${{ env.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      # Deploy
-      - run: rsync --archive --compress --progress . ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.SERVER_PATH }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir:  ${{ secrets.SERVER_PATH }}     
