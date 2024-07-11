@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  FTP_SERVER: 54.91.233.2
+  FTP_SERVER: 54.83.159.104
   FTP_USERNAME: ubuntu
   SERVER_PATH: /home/ubuntu/project
 
